@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Как всё начиналось? Гипотеза математической вселенной</title>
+<meta name="description" content="Страница к стенду фестиваля РУДН: гипотеза математической вселенной Макса Тегмарка подробно, живая игра «Жизнь» и открытые вопросы.">
+<meta property="og:title" content="Как всё начиналось? А если — никак.">
+<meta property="og:description" content="Гипотеза математической вселенной Макса Тегмарка: подробнее к стенду, живая «Жизнь» и открытые вопросы.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#0B1230">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3'%3E%3Crect width='3' height='3' fill='%230B1230'/%3E%3Cpath fill='%23FFB23E' d='M1 0h.9v.9H1zM2 1h.9v.9H2zM0 2h.9v.9H0zM1 2h.9v.9H1zM2 2h.9v.9H2z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700;800&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Цвета те же, что на стенде: тёмная тема — как у печатного варианта. */
+:root {
+  --bg: #F5F6FA; --bg2: #E7EBF4; --fg: #131A3A; --muted: #4D5778; --line: #C2CADF;
+  --accent: #E07812; --accent-ink: #B35200; --cell2: #2B3566; --board: #ECEFF6;
+  --gridline: rgba(19, 26, 58, .07); --glow: rgba(120, 140, 220, .18); --ghost: rgba(224, 120, 18, .25);
+  --page-grid: rgba(19, 26, 58, .04);
+  --serif: "Golos Text", "Segoe UI", system-ui, sans-serif;
+  --display: "Unbounded", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", Consolas, ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1230; --bg2: #121B45; --fg: #EEF1F8; --muted: #A9B3D2; --line: #2E3C72;
+    --accent: #FFB23E; --accent-ink: #FFB23E; --cell2: #BAC4E8; --board: #0F1840;
+    --gridline: rgba(255, 255, 255, .07); --glow: rgba(70, 96, 200, .32); --ghost: rgba(255, 178, 62, .25);
+    --page-grid: rgba(255, 255, 255, .035);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1230; --bg2: #121B45; --fg: #EEF1F8; --muted: #A9B3D2; --line: #2E3C72;
+  --accent: #FFB23E; --accent-ink: #FFB23E; --cell2: #BAC4E8; --board: #0F1840;
+  --gridline: rgba(255, 255, 255, .07); --glow: rgba(70, 96, 200, .32); --ghost: rgba(255, 178, 62, .25);
+  --page-grid: rgba(255, 255, 255, .035);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background-color: var(--bg); color: var(--fg);
+  font: 400 18px/1.6 var(--serif);
+  background-image:
+    radial-gradient(ellipse 80% 420px at 90% 0, var(--glow), transparent 70%),
+    linear-gradient(var(--page-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-grid) 1px, transparent 1px);
+  background-size: auto, 32px 32px, 32px 32px;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* шапка */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 14px 0; font: 500 13px/1.3 var(--mono); color: var(--muted); }
+.themeBtn { font: 500 13px var(--serif); color: var(--fg); background: var(--bg2);
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.hero { padding: 40px 0 8px; }
+.eyebrow { font: 700 13px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-ink); margin: 0; }
+h1 { font: 800 clamp(40px, 10vw, 76px)/.95 var(--display); letter-spacing: -.02em; margin: 18px 0 0; }
+.answer { font: 300 clamp(26px, 6vw, 42px)/1.1 var(--display); color: var(--accent); margin: 14px 0 0; }
+.lead { font-size: 20px; color: var(--muted); margin: 28px 0 0; }
+.short { margin: 28px 0 0; padding: 18px 20px; background: var(--bg2); border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0; }
+.short b { font-weight: 600; }
+
+/* оглавление */
+.toc { margin: 36px 0 0; padding: 0; list-style: none; counter-reset: toc;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px 20px; }
+.toc li { counter-increment: toc; }
+.toc a { display: flex; gap: 10px; padding: 7px 0; color: var(--fg); text-decoration: none;
+  border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.3; }
+.toc a::before { content: counter(toc, decimal-leading-zero); font: 500 13px/1.6 var(--mono); color: var(--accent-ink); }
+.toc a:hover { color: var(--accent-ink); }
+
+/* разделы */
+section { padding: 64px 0 0; scroll-margin-top: 8px; }
+h2 { font: 700 clamp(25px, 5.4vw, 34px)/1.15 var(--display); letter-spacing: -.01em; margin: 0 0 18px; }
+h2 .n { display: block; font: 500 14px/1 var(--mono); color: var(--accent-ink); letter-spacing: .08em; margin-bottom: 12px; }
+h3 { font: 600 21px/1.3 var(--serif); margin: 32px 0 8px; }
+p { margin: 12px 0 0; }
+.muted { color: var(--muted); }
+ul.plain { padding-left: 1.1em; margin: 12px 0 0; }
+ul.plain li { margin: 6px 0 0; }
+ul.plain li::marker { color: var(--accent); }
+
+/* факты */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 24px 0 0; }
+.fact { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.yrs { font: 700 24px/1 var(--mono); color: var(--accent); }
+.yrs span { font-weight: 400; color: var(--muted); }
+.fact h3 { margin: 10px 0 0; font-size: 19px; }
+.fact p { font-size: 16px; line-height: 1.5; color: var(--muted); margin-top: 6px; }
+.legend { font: 400 13px/1.4 var(--mono); color: var(--muted); margin-top: 10px; }
+.callout { margin: 24px 0 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; }
+.callout h3 { margin-top: 0; }
+.three { counter-reset: three; list-style: none; padding: 0; margin: 16px 0 0; }
+.three li { counter-increment: three; position: relative; padding: 0 0 0 44px; margin: 14px 0 0; }
+.three li::before { content: counter(three); position: absolute; left: 0; top: 1px; width: 30px; height: 30px;
+  border: 2px solid var(--accent); border-radius: 50%; display: grid; place-items: center;
+  font: 700 14px/1 var(--mono); color: var(--accent-ink); }
+.three li.me::before { background: var(--accent); color: var(--bg); }
+blockquote { margin: 20px 0 0; padding: 0 0 0 18px; border-left: 3px solid var(--accent);
+  font-size: 19px; font-style: italic; }
+blockquote footer { font-style: normal; font-size: 15px; color: var(--muted); margin-top: 6px; }
+
+/* шаги */
+.step { display: grid; grid-template-columns: 52px 1fr; gap: 0 16px; margin: 34px 0 0; }
+.step .num { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent);
+  display: grid; place-items: center; font: 700 17px/1 var(--mono); color: var(--accent-ink); }
+.step h3 { margin: 6px 0 0; }
+.step .body { min-width: 0; }
+.fig { margin: 16px 0 0; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.fig svg { flex: none; }
+.fig figcaption { flex: 1 1 200px; font-size: 15px; line-height: 1.45; color: var(--muted); }
+.board-sq-a { fill: var(--bg2); } .board-sq-b { fill: var(--board); }
+.knight { font: 26px/1 serif; fill: var(--fg); }
+.dot { fill: var(--accent); }
+.numbers { margin: 16px 0 0; padding: 14px 18px; background: var(--board); border: 1px solid var(--line);
+  border-radius: 10px; font: 500 16px/1.8 var(--mono); }
+.numbers span { color: var(--muted); }
+.rules { list-style: none; padding: 0; margin: 14px 0 0; }
+.rules li { margin: 8px 0 0; padding-left: 16px; border-left: 3px solid var(--accent); }
+.punch { margin: 48px 0 0; font: 700 clamp(24px, 5.6vw, 36px)/1.2 var(--display); }
+.punch em { font-style: normal; color: var(--accent); }
+.aside { margin: 24px 0 0; padding: 16px 18px; background: var(--bg2); border-radius: 12px; font-size: 16.5px; }
+
+/* «Жизнь» */
+.life { margin: 20px 0 0; background: var(--board); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.life canvas { display: block; width: 100%; touch-action: none; cursor: crosshair; border-radius: 6px; }
+.ctrl { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0 0; }
+.ctrl button { font: 500 15px/1 var(--serif); color: var(--fg); background: var(--bg2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 9px 15px; cursor: pointer; }
+.ctrl button.primary { background: var(--accent); color: #131A3A; border-color: var(--accent); font-weight: 600; min-width: 108px; }
+.ctrl .stat { margin-left: auto; font: 400 13px/1.3 var(--mono); color: var(--muted); }
+
+/* лягушка и птица */
+.views { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 16px; align-items: end; margin: 20px 0 0; }
+.view { text-align: center; }
+.view canvas { width: 100%; height: auto; display: block; }
+.view .cap { font: 600 15px/1.3 var(--serif); margin: 8px 0 0; }
+.view .capS { font-size: 13.5px; line-height: 1.3; color: var(--muted); margin: 2px 0 0; }
+.slider { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; font: 400 14px var(--mono); color: var(--muted); }
+.slider input { flex: 1; accent-color: var(--accent); }
+
+/* трилемма */
+.ways { display: grid; gap: 6px; margin: 18px 0 0; }
+.way { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; }
+.way svg { width: 40px; height: 24px; }
+.ico { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; }
+.icoFill { fill: var(--accent); }
+.group { margin: 28px 0 0; }
+.group > .gh { display: flex; gap: 12px; align-items: center; font: 600 15px/1.2 var(--mono);
+  letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); }
+.group > .gh svg { width: 36px; height: 22px; }
+.card { margin: 12px 0 0; padding: 14px 18px; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; }
+.card h3 { margin: 0; font-size: 18.5px; }
+.card p { font-size: 16.5px; line-height: 1.5; margin-top: 6px; }
+.card .dead { color: var(--muted); }
+.card .dead b { color: var(--accent-ink); font-weight: 600; }
+.card.me { border-color: var(--accent); }
+.ask { font: 600 20px/1.35 var(--serif); color: var(--accent-ink); margin-top: 28px; }
+
+/* опрос */
+.vote { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
+.vote button { flex: 1 1 200px; font: 700 18px/1.2 var(--display); padding: 18px 16px; border-radius: 12px; cursor: pointer;
+  background: var(--bg2); color: var(--fg); border: 2px solid var(--line); }
+.vote button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: #131A3A; }
+.args { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0 0; }
+.args[hidden] { display: none; }
+.arg { padding: 14px 18px; border: 1px solid var(--line); border-radius: 12px; }
+.arg h3 { margin: 0; font-size: 17px; }
+.arg.mine { border-color: var(--accent); }
+.arg .tag { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--accent-ink); }
+.arg ul { padding-left: 1.1em; margin: 8px 0 0; font-size: 16px; line-height: 1.5; }
+.arg li { margin: 6px 0 0; }
+.arg li::marker { color: var(--accent); }
+
+/* слабые места, литература */
+.weak h3 { margin-top: 26px; }
+.refs { list-style: none; padding: 0; margin: 16px 0 0; }
+.refs li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 16.5px; line-height: 1.45; }
+.refs li span { display: block; color: var(--muted); font-size: 15px; margin-top: 2px; }
+
+footer.end { margin: 80px 0 0; padding: 28px 0 48px; border-top: 1px solid var(--line); }
+.cta { font: 700 clamp(22px, 5vw, 30px)/1.2 var(--display); margin: 0; }
+.cta em { font-style: normal; color: var(--accent); }
+.authors { margin: 22px 0 0; color: var(--muted); font-size: 16px; }
+.authors b { color: var(--fg); font-weight: 600; }
+
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .step { grid-template-columns: 40px 1fr; gap: 0 12px; }
+  .step .num { width: 36px; height: 36px; font-size: 15px; }
+  .views { grid-template-columns: 1fr; }
+  .view.frog canvas { max-width: 220px; margin: 0 auto; }
+  .ctrl .stat { margin-left: 0; width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <span>РУДН · фестиваль · 2026</span>
+  <button class="themeBtn" id="themeBtn" type="button">Светлая тема</button>
+</div>
+
+<header class="hero">
+  <p class="eyebrow">Гипотеза математической вселенной · Макс Тегмарк</p>
+  <h1>Как всё<br>начиналось?</h1>
+  <p class="answer">А если — никак.</p>
+  <p class="lead">Это страница к стенду. На стенде короткая версия, здесь подробности, живая игра «Жизнь» и вопросы, которые на стенд не поместились.</p>
+  <div class="short"><b>Коротко.</b> Физик Макс Тегмарк из Массачусетского технологического института предположил, что наш мир не просто описывается математикой, а сам является математической структурой. Тогда у вселенной нет момента создания: математическая структура не возникает, она просто есть, как число π. Большой взрыв в этой картине — край структуры, который изнутри выглядит началом.</div>
+  <ol class="toc">
+    <li><a href="#fakt">Странный факт</a></li>
+    <li><a href="#iz-chego">Из чего сделан мир?</a></li>
+    <li><a href="#zhizn">Живая «Жизнь»</a></li>
+    <li><a href="#ptica">Взгляд лягушки и птицы</a></li>
+    <li><a href="#ne-simulyaciya">Это не симуляция</a></li>
+    <li><a href="#kroliki">Почему мир не ломается каждую секунду?</a></li>
+    <li><a href="#tupik">У каждого ответа свой тупик</a></li>
+    <li><a href="#opros">Математику открыли или придумали?</a></li>
+    <li><a href="#slabye-mesta">Слабые места гипотезы</a></li>
+    <li><a href="#chitat">Что почитать</a></li>
+  </ol>
+</header>
+
+<main>
+
+<section id="fakt">
+  <h2><span class="n">01</span>Странный факт: формулы знают больше, чем в них вложили</h2>
+  <p>Физики выводят уравнения из того, что уже видели. Странно то, что потом эти уравнения рассказывают о вещах, которых не видел никто, и оказываются правы.</p>
+  <div class="facts">
+    <div class="fact">
+      <div class="yrs">1846 <span>→</span> 1846</div>
+      <h3>Нептун</h3>
+      <p>Уран двигался не совсем так, как требовал закон тяготения Ньютона. Урбен Леверье предположил, что его тянет неизвестная планета, и вычислил, где она должна быть. 23 сентября 1846 года Иоганн Галле навёл телескоп в указанное место и в первую же ночь нашёл Нептун меньше чем в градусе от расчётной точки. Похожий расчёт независимо сделал Джон Адамс в Англии.</p>
+    </div>
+    <div class="fact">
+      <div class="yrs">1928 <span>→</span> 1932</div>
+      <h3>Позитрон</h3>
+      <p>Поль Дирак искал уравнение электрона, совместимое с теорией относительности. Уравнение получилось, но у него нашлись «лишние» решения. В 1931 году Дирак сказал прямо: должна существовать частица с массой электрона и противоположным зарядом. В 1932 году Карл Андерсон увидел её след в камере Вильсона, в космических лучах. Так открыли антивещество.</p>
+    </div>
+    <div class="fact">
+      <div class="yrs">1964 <span>→</span> 2012</div>
+      <h3>Бозон Хиггса</h3>
+      <p>Чтобы объяснить, откуда у частиц масса, Питер Хиггс, Франсуа Энглер с Робером Браутом и ещё трое физиков предложили новое поле, а вместе с ним новую частицу. Чтобы её поймать, понадобились почти полвека и Большой адронный коллайдер. Открытие объявили 4 июля 2012 года, через год Хиггс и Энглер получили Нобелевскую премию.</p>
+    </div>
+    <div class="fact">
+      <div class="yrs">1916 <span>→</span> 2015</div>
+      <h3>Гравитационные волны</h3>
+      <p>Из общей теории относительности Эйнштейн вывел, что движущиеся массы порождают рябь пространства-времени, но сомневался, что её когда-нибудь заметят. 14 сентября 2015 года детекторы LIGO поймали волну от слияния двух чёрных дыр на расстоянии около 1,3 млрд световых лет. Четырёхкилометровые плечи детектора изменились на величину примерно в тысячу раз меньше протона.</p>
+    </div>
+  </div>
+  <p class="legend">год предсказания → год открытия</p>
+
+  <h3>И не только «что», но и «сколько»</h3>
+  <p>Квантовая электродинамика предсказывает магнитный момент электрона, и теория совпадает с экспериментом больше чем в десяти знаках. Ричард Фейнман сравнивал такую точность с измерением расстояния от Лос-Анджелеса до Нью-Йорка с точностью до толщины человеческого волоса.</p>
+
+  <h3>Бывает и наоборот</h3>
+  <p>Не всё начиналось с формул. Атомное ядро никто не предсказывал. Ученики Эрнеста Резерфорда Ганс Гейгер и Эрнест Марсден обстреливали тонкую золотую фольгу альфа-частицами, и некоторые частицы отскакивали назад. Резерфорд говорил, что это так же невероятно, как если бы снаряд отскочил от папиросной бумаги. В 1911 году он объяснил опыт: почти вся масса атома собрана в крошечном ядре. Но и ядро потом легло в формулы: по ним сегодня рассчитывают, как светят звёзды и как работает атомная станция.</p>
+
+  <div class="callout">
+    <h3>Почему это странно</h3>
+    <p>Точность сама по себе ещё не чудо: если долго подгонять формулу под данные, она будет хорошо описывать эти данные. Странно другое. Закон Ньютона вывели из движения известных планет, а он нашёл неизвестную. Дирак писал уравнение для электрона, а оно потребовало антивещества. Вложили немного, получили больше, и это «больше» оказалось правдой.</p>
+    <p>Физик Юджин Вигнер в 1960 году назвал это «непостижимой эффективностью математики в естественных науках».</p>
+    <blockquote>Чудесная пригодность языка математики для формулировки законов физики — это удивительный дар, который мы не понимаем и которого не заслуживаем.<footer>Юджин Вигнер, 1960</footer></blockquote>
+    <p>Объяснений можно придумать три:</p>
+    <ol class="three">
+      <li><b>Отбор.</b> Мы изучаем то, что поддаётся математике, а остальное называем «слишком сложным» и откладываем. Но тогда непонятно, почему поддаётся так много: от кварков до галактик.</li>
+      <li><b>Удачный язык.</b> Математику придумали люди как инструмент, и он оказался хорош. Но тогда непонятно, как инструмент «знает» о вещах, которых его создатели никогда не видели.</li>
+      <li class="me"><b>Тегмарк.</b> Математика описывает мир идеально, потому что мир и есть математическая структура. Карта не может разойтись с территорией, если карта и есть территория.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="iz-chego">
+  <h2><span class="n">02</span>Из чего сделан мир?</h2>
+  <p>Вопрос кажется простым, пока не начнёшь отвечать на него всерьёз. Вот четыре шага, по которым идёт рассуждение Тегмарка.</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>Из чего сделан шахматный конь?</h3>
+      <p>Не из дерева. В шахматы можно играть пластиковыми фигурами, пробками от бутылок, на экране или вслепую, в уме, и партия от этого не изменится. Конь — это правило: ходит буквой «Г» и перепрыгивает через фигуры. Уберите дерево, и конь останется. Уберите правило, и коня не будет, останется деревяшка.</p>
+      <figure class="fig">
+        <svg viewBox="0 0 100 100" width="120" height="120" aria-hidden="true">
+          <g id="kb"></g>
+          <text class="knight" x="50" y="59" text-anchor="middle">♞</text>
+        </svg>
+        <figcaption>Конь — это не форма фигуры, а восемь клеток, на которые он может пойти.</figcaption>
+      </figure>
+      <p>Математики называют такие вещи <b>структурами</b>: важно не то, из чего сделаны объекты, а то, как они связаны друг с другом.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>Из чего сделан электрон?</h3>
+      <p>Физика знает об электроне только числа и уравнения, по которым он взаимодействует с другими частицами:</p>
+      <div class="numbers">
+        масса <span>=</span> 9,109·10⁻³¹ кг<br>
+        заряд <span>=</span> −1,602·10⁻¹⁹ Кл<br>
+        спин <span>=</span> ½
+      </div>
+      <p>«Материала», из которого он сделан, в физике нет. Попробуйте назвать свойство электрона, которое не является числом или связью между числами. Не получится.</p>
+      <p>Ещё одна деталь: все электроны во Вселенной в точности одинаковы. Они не похожи друг на друга, как близнецы, а неразличимы в принципе. Это не догадка: на неразличимости держится принцип Паули, а на нём — вся таблица Менделеева. Похоже, электрон — не крупинка вещества, а место в структуре, как конь в шахматах. Философы называют такой взгляд структурным реализмом.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>Из чего сделан мир игры «Жизнь»?</h3>
+      <p>«Жизнь» придумал математик Джон Конвей в 1970 году. Это игра без игроков: поле из клеток, каждая клетка живая или пустая. На каждом ходу все клетки одновременно смотрят на восемь соседей, и правил всего два:</p>
+      <ul class="rules">
+        <li><b>Рождение.</b> Пустая клетка, у которой ровно три живых соседа, оживает.</li>
+        <li><b>Выживание.</b> Живая клетка с двумя или тремя живыми соседями остаётся живой. Остальные клетки на следующем ходу пусты.</li>
+      </ul>
+      <p>Из этих правил возникают «существа»: планеры, которые ползут по полю, «ружья», которые стреляют планерами, и даже конструкции, работающие как настоящий компьютер. В «Жизни» есть своя скорость света: ничто не движется быстрее одной клетки за ход. Её так и обозначают — <i>c</i>, а планер летит со скоростью <i>c</i>/4.</p>
+      <p>Представьте учёного, который живёт внутри «Жизни». Изучив свой мир, он открыл бы: «наш мир — это сетка и два правила». И был бы прав: больше там ничего нет. <a href="#zhizn">Попробуйте сами ↓</a></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h3>Из чего сделан наш мир?</h3>
+      <p>Всё, что физика знает о частицах и силах, описывают две теории: Стандартная модель и общая теория относительности. Обе состоят из полей, симметрий и уравнений. Тегмарк делает следующий шаг: кроме них там ничего нет. Нет «материала», на котором записаны уравнения: уравнения и есть мир. А мы — части этой структуры, достаточно сложные, чтобы её заметить.</p>
+      <p>Его рассуждение такое. Допустим, мир существует независимо от людей. Тогда его полное описание не должно опираться на человеческие понятия вроде «твёрдый», «красный» или «далеко». Описание без всякого человеческого багажа — это и есть математическая структура: объекты и отношения между ними, ничего больше. Но если полное описание мира — математическая структура, то чем мир от неё отличается? Тегмарк отвечает: ничем.</p>
+    </div>
+  </div>
+
+  <p class="punch">Мир не описывается математикой.<br>Он <em>и есть</em> математика.</p>
+
+  <div class="aside">
+    <b>А почему именно эта структура?</b> Тегмарк отвечает: существуют все. Это четвёртый, последний уровень его мультивселенной. Первые три: области космоса за пределами того, что мы можем увидеть; другие «пузыри» космологической инфляции, где могут быть другие константы; ветви квантовой механики в многомировой интерпретации Эверетта. На четвёртом уровне существуют все математические структуры, а мы живём в одной из тех, где возможны наблюдатели. Отсюда же начинается главная трудность гипотезы — <a href="#kroliki">проблема белых кроликов</a>.
+  </div>
+</section>
+
+<section id="zhizn">
+  <h2><span class="n">03</span>Живая «Жизнь»</h2>
+  <p>Нажмите «Пуск». Слева вверху — «ружьё Госпера», его в 1970 году нашёл Билл Госпер: каждые 30 ходов оно выпускает новый планер. Нажимайте на клетки или ведите по полю, чтобы рисовать свои фигуры.</p>
+  <div class="life">
+    <canvas id="lifeCanvas" aria-label="Поле игры «Жизнь»"></canvas>
+    <div class="ctrl">
+      <button type="button" class="primary" id="lifePlay">▶ Пуск</button>
+      <button type="button" id="lifeStep">Шаг</button>
+      <button type="button" id="lifeGun">Ружьё</button>
+      <button type="button" id="lifeRand">Случайно</button>
+      <button type="button" id="lifeClear">Очистить</button>
+      <span class="stat" id="lifeStat">ход 0 · клеток 0</span>
+    </div>
+  </div>
+  <p class="muted">Попробуйте «Случайно»: из хаоса быстро выделяются устойчивые фигуры — блоки, ульи, мигалки — и иногда улетающие планеры. Никто их не программировал, они следуют из двух правил.</p>
+</section>
+
+<section id="ptica">
+  <h2><span class="n">04</span>Взгляд лягушки и взгляд птицы</h2>
+  <p>Тегмарк различает два взгляда на мир. Лягушка сидит внутри и видит, как одно мгновение сменяется другим: планер ползёт, клетки рождаются и гибнут. Птица смотрит снаружи и видит все кадры сразу, сложенные в стопку. Для неё ничего не происходит: стопка просто есть, целиком.</p>
+  <div class="views">
+    <div class="view frog">
+      <canvas id="frogCanvas" width="336" height="336" aria-label="Один кадр мира: планер и блок"></canvas>
+      <p class="cap">Взгляд лягушки</p>
+      <p class="capS">один кадр: мир меняется</p>
+    </div>
+    <div class="view">
+      <canvas id="birdCanvas" width="520" height="440" aria-label="Все кадры мира, сложенные в стопку"></canvas>
+      <p class="cap">Взгляд птицы</p>
+      <p class="capS">вся история — один объект</p>
+    </div>
+  </div>
+  <div class="slider">
+    <span>кадр</span>
+    <input type="range" id="frame" min="0" max="15" value="8" aria-label="Номер кадра">
+    <span id="frameN">8</span>
+  </div>
+  <p>Теория относительности рисует наш мир похожим образом. Пространство и время в ней образуют единое четырёхмерное пространство-время, и общего для всех «сейчас» в нём нет. Физики называют такую картину <b>блочной вселенной</b>.</p>
+  <p>Если Тегмарк прав, наша вселенная — такая же стопка, только из математики гораздо сложнее «Жизни». Большой взрыв — её первый кадр. Изнутри он выглядит началом всего, но у стопки целиком начала нет: она не возникала, она просто есть. Вопрос «что было до Большого взрыва?» похож на вопрос «что лежит под нижним кадром?». Стивен Хокинг в похожем случае сравнивал его с вопросом «что находится южнее Южного полюса?».</p>
+  <p class="muted">Был ли Большой взрыв действительно первым кадром, физика пока не знает: возможно, ему что-то предшествовало. Для гипотезы Тегмарка это неважно: сколько бы кадров ни было, у стопки целиком нет момента появления.</p>
+</section>
+
+<section id="ne-simulyaciya">
+  <h2><span class="n">05</span>Это не симуляция</h2>
+  <p>Гипотезу часто путают с идеей, что мы живём в компьютерной симуляции. Разница принципиальная. Симуляции нужны компьютер, программист и время, в котором её запустили, а значит, возникает вопрос, откуда взялись они.</p>
+  <p>По Тегмарку, ничего этого не нужно. Математическая структура существует сама, как существует число π: его знак с номером в гугол уже какой-то, хотя его никто никогда не вычислит. Структуру никто не «запускал», а время — это то, что есть внутри неё, как ходы внутри «Жизни». Компьютер, который считает «Жизнь», лишь показывает нам кадры стопки, которая и без него та же самая.</p>
+</section>
+
+<section id="kroliki">
+  <h2><span class="n">06</span>Почему наш мир не ломается каждую секунду?</h2>
+  <p>Если существуют все математические структуры, то существуют и миры, которые до этой секунды были в точности как наш, а дальше нет: в следующий момент законы ломаются и из шляпы выпрыгивает белый кролик. Так это и называют — <b>проблема белых кроликов</b>.</p>
+  <p>Хуже того, «ломающихся» миров гораздо больше, чем аккуратных. Порядок может продолжиться только одним способом, а сломаться — бесчисленным множеством способов, как у аккуратной стопки бумаг одно положение, а у рассыпанной миллионы. Если просто пересчитать все миры, похожие на наш до сих пор, почти все они в следующую секунду превращаются в хаос. А наш мир миллиарды лет подчиняется одним и тем же законам.</p>
+
+  <h3>Но ведь нам могло просто повезти?</h3>
+  <p>Могло. Но так рассуждать нельзя. Если игральная кость сто раз подряд выпала шестёркой, вы не скажете «ну, повезло», а заподозрите, что кость нечестная. Теория, по которой то, что мы видим, почти невероятно, теряет доверие, и тем сильнее, чем невероятнее наблюдение. Только так и можно проверять теории о вселенной, которая дана нам в единственном экземпляре: если теория верна, мы должны оказаться в типичном для неё мире, а не в редком исключении.</p>
+
+  <h3>А может, порядок нужен, чтобы мы вообще существовали?</h3>
+  <p>Отчасти да: в совсем хаотичном мире наблюдатели не появились бы. Но для жизни хватило бы порядка здесь и сейчас. Почему законы те же в далёких галактиках и действовали миллиарды лет назад, когда нас не было? Почему порядок не ломается в следующую секунду? Нашему существованию это уже не нужно.</p>
+
+  <h3>Что предлагают в ответ</h3>
+  <ul class="plain">
+    <li><b>Простое весит больше.</b> Возможно, структуры существуют «с разным весом»: чем короче описание, тем больше вес. Мир с простыми законами описывается коротко, а мир «те же законы плюс кролик в 12:03» длиннее, и его вес меньше. Тогда бритва Оккама — не просто привычка учёных, а свойство самой мультивселенной. Если вес падает вдвое с каждым лишним битом описания, сумма всех весов остаётся конечной, и такое взвешивание математически корректно.</li>
+    <li><b>Только вычислимое.</b> Сам Тегмарк в 2008 году предложил вариант осторожнее, гипотезу вычислимой вселенной: существуют только структуры, которые можно вычислить. Это отсекает самых диких «монстров» и снимает трудности, связанные с теоремами Гёделя о неполноте.</li>
+    <li><b>Пока никто не знает.</b> Как правильно взвешивать миры (физики говорят «проблема меры»), остаётся главным открытым вопросом гипотезы. Похожая проблема есть и у космологической инфляции, где тоже возникает бесконечно много вселенных.</li>
+  </ul>
+</section>
+
+<section id="tupik">
+  <h2><span class="n">07</span>У каждого ответа свой тупик</h2>
+  <p>Любая гипотеза о происхождении мира объясняет его через что-то ещё. Но тогда можно спросить: а это «что-то» откуда? Если спрашивать «а это почему?» снова и снова, цепочка закончится одним из трёх способов:</p>
+  <div class="ways">
+    <div class="way"><svg viewBox="0 0 40 24" aria-hidden="true"><path class="ico" d="M20 12 C14 2 4 2 4 12 C4 22 14 22 20 12 C26 2 36 2 36 12 C36 22 26 22 20 12Z"/></svg><span><b>уходит в бесконечность</b>: каждое объяснение требует следующего;</span></div>
+    <div class="way"><svg viewBox="0 0 40 24" aria-hidden="true"><path class="ico" d="M27.5 5.5 A9.5 9.5 0 1 0 29.5 12"/><path class="icoFill" d="M23.6 2.2 l7.4 2.6 -5.2 5.6z"/></svg><span><b>замыкается в круг</b>: объяснение опирается само на себя;</span></div>
+    <div class="way"><svg viewBox="0 0 40 24" aria-hidden="true"><rect class="icoFill" x="11" y="3" width="18" height="18" rx="1.5"/></svg><span><b>останавливается</b> на чём-то, что принимается без объяснения.</span></div>
+  </div>
+  <p>Философ Ханс Альберт в 1968 году назвал это трилеммой Мюнхгаузена: барон тоже пытался вытащить себя из болота за волосы. Сама идея гораздо старше, её разбирали ещё древнегреческие скептики. Выхода нет ни у одной гипотезы, различаются только тупики.</p>
+
+  <div class="group">
+    <div class="gh"><svg viewBox="0 0 40 24" aria-hidden="true"><path class="ico" d="M20 12 C14 2 4 2 4 12 C4 22 14 22 20 12 C26 2 36 2 36 12 C36 22 26 22 20 12Z"/></svg>Бесконечно</div>
+    <div class="card">
+      <h3>Циклическая вселенная</h3>
+      <p>Наша вселенная — один цикл в бесконечной череде: до Большого взрыва был предыдущий цикл, до него ещё один. Такие модели предлагали Роджер Пенроуз, а также Пол Стейнхардт и Нил Турок.</p>
+      <p class="dead"><b>Тупик:</b> почему существует сама череда циклов и почему у неё именно такие законы?</p>
+    </div>
+    <div class="card">
+      <h3>Симуляция</h3>
+      <p>Наш мир — программа на чьём-то компьютере. Эту возможность всерьёз разобрал философ Ник Бостром в 2003 году.</p>
+      <p class="dead"><b>Тупик:</b> а мир симулятора откуда? Если он тоже симуляция, получается бесконечная лестница.</p>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="gh"><svg viewBox="0 0 40 24" aria-hidden="true"><path class="ico" d="M27.5 5.5 A9.5 9.5 0 1 0 29.5 12"/><path class="icoFill" d="M23.6 2.2 l7.4 2.6 -5.2 5.6z"/></svg>По кругу</div>
+    <div class="card">
+      <h3>Петля времени</h3>
+      <p>Ричард Готт и Ли-Синь Ли в 1998 году показали, что уравнения Эйнштейна допускают вселенную, которая создала саму себя: в самом начале время замкнуто в петлю, и ранняя вселенная оказывается собственной причиной.</p>
+      <p class="dead"><b>Тупик:</b> объяснение опирается само на себя. Почему существует именно эта петля, а не никакой?</p>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="gh"><svg viewBox="0 0 40 24" aria-hidden="true"><rect class="icoFill" x="11" y="3" width="18" height="18" rx="1.5"/></svg>Остановка</div>
+    <div class="card">
+      <h3>Вселенная без границы</h3>
+      <p>Джеймс Хартл и Стивен Хокинг (1983): если идти назад во времени, время плавно превращается в ещё одно измерение пространства, и у вселенной нет края-начала, как у поверхности Земли нет края на Южном полюсе.</p>
+      <p class="dead"><b>Тупик:</b> цепочка останавливается на законах квантовой механики и гравитации. Почему они такие, не объясняется.</p>
+    </div>
+    <div class="card">
+      <h3>Бог</h3>
+      <p>Мир создан Богом, а сам Бог существует необходимо и причины не требует.</p>
+      <p class="dead"><b>Тупик:</b> цепочка останавливается на Боге: его существование и его выбор принимаются как исходная точка.</p>
+    </div>
+    <div class="card me">
+      <h3>Математическая вселенная</h3>
+      <p>Остановка на математике. Её сильная сторона в том, что математическим истинам, похоже, причина не нужна: равенство 2 + 2 = 4 не «возникло» в какой-то момент.</p>
+      <p class="dead"><b>Тупик:</b> почему математически существовать — то же самое, что существовать физически? И почему мы оказались именно в этой структуре? (См. <a href="#kroliki">белых кроликов</a>.)</p>
+    </div>
+  </div>
+  <p class="ask">Тупик есть у каждого ответа. Какой кажется честнее вам?</p>
+</section>
+
+<section id="opros">
+  <h2><span class="n">08</span>Математику открыли или придумали?</h2>
+  <p>Старый спор, без которого гипотезу Тегмарка не понять. Выберите, что вам ближе, и посмотрите, что вам возразят.</p>
+  <div class="vote" role="group" aria-label="Ваш ответ">
+    <button type="button" data-vote="found" aria-pressed="false">Открыли</button>
+    <button type="button" data-vote="made" aria-pressed="false">Придумали</button>
+  </div>
+  <div class="args" id="args" hidden>
+    <div class="arg" data-side="found">
+      <span class="tag" data-tag></span>
+      <h3>Открыли</h3>
+      <ul>
+        <li>Одну и ту же математику находят независимо друг от друга: Ньютон и Лейбниц — математический анализ, Лобачевский, Бойяи и Гаусс — неевклидову геометрию.</li>
+        <li>Математические факты не меняются по договорённости: простых чисел бесконечно много, как бы мы их ни называли и в какой бы системе ни записывали.</li>
+        <li>Математика, созданная «для красоты», потом оказывается законами природы: неевклидова геометрия стала геометрией пространства-времени у Эйнштейна, комплексные числа — языком квантовой механики.</li>
+      </ul>
+    </div>
+    <div class="arg" data-side="made">
+      <span class="tag" data-tag></span>
+      <h3>Придумали</h3>
+      <ul>
+        <li>Аксиомы выбираем мы. Возьмите другие, и получится другая математика, тоже непротиворечивая.</li>
+        <li>Большая часть математики не описывает ничего в физическом мире.</li>
+        <li>Математика — язык, который люди тысячелетиями оттачивали на счёте, измерениях и движении. Неудивительно, что им удобно описывать именно это.</li>
+      </ul>
+    </div>
+  </div>
+  <p id="tegmarkSays" hidden><b>Тегмарк</b> отвечает радикально: открыли, и не только математику, а весь мир. По его мнению, придуманы только обозначения, а структуры, которые они описывают, существуют сами по себе.</p>
+  <p class="muted">Ответы на этой странице нигде не сохраняются: выбор остаётся только у вас.</p>
+</section>
+
+<section id="slabye-mesta" class="weak">
+  <h2><span class="n">09</span>Слабые места гипотезы</h2>
+  <p>Гипотеза математической вселенной — не общепринятая теория, а смелая идея. Вот что ей возражают.</p>
+  <h3>Её трудно проверить</h3>
+  <p>Все математические структуры, кроме нашей, недоступны для наблюдения. Тегмарк отвечает, что гипотеза всё же делает предсказания. Мы должны оказаться в типичной из структур, где возможны наблюдатели. А физика никогда не упрётся в явление, которое в принципе нельзя описать математикой. Если упрётся, гипотеза опровергнута.</p>
+  <h3>Проблема меры</h3>
+  <p>Пока неизвестно, как «взвешивать» структуры, гипотеза не может сказать, какой мир для нас типичен. Без этого ответа её предсказания размыты. Подробнее — в разделе о <a href="#kroliki">белых кроликах</a>.</p>
+  <h3>Откуда сознание?</h3>
+  <p>Как из структуры, в которой есть только объекты и отношения, берутся ощущения: цвет, боль, радость? Тегмарк считает сознание особым способом обрабатывать информацию и предлагал описывать его как состояние материи. Но это тоже гипотеза.</p>
+  <h3>Это физика или философия?</h3>
+  <p>Многие физики считают, что вопрос «из чего сделан мир на самом деле» лежит за пределами физики: гипотеза не меняет ни одного расчёта. Сторонники отвечают, что физика уже не раз превращала философские вопросы в проверяемые.</p>
+  <p class="muted">Мы рассказали об этой гипотезе потому, что она даёт неожиданно последовательный ответ на вопрос «как всё начиналось?», а не потому, что она доказана.</p>
+</section>
+
+<section id="chitat">
+  <h2><span class="n">10</span>Что почитать</h2>
+  <ul class="refs">
+    <li>Макс Тегмарк. <b>Наша математическая вселенная. В поисках фундаментальной природы реальности.</b> М.: АСТ: CORPUS, 2017.<span>Главная книга по теме, написана для широкого читателя.</span></li>
+    <li>Max Tegmark. <b>The Mathematical Universe.</b> Foundations of Physics 38, 101–150 (2008). <a href="https://arxiv.org/abs/0704.0646">arXiv:0704.0646</a><span>Исходная статья с гипотезой вычислимой вселенной, на английском.</span></li>
+    <li>Eugene Wigner. <b>The Unreasonable Effectiveness of Mathematics in the Natural Sciences.</b> Communications on Pure and Applied Mathematics 13 (1960).<span>Эссе о «непостижимой эффективности».</span></li>
+    <li>Стивен Хокинг. <b>Краткая история времени.</b><span>В том числе о вселенной без границы.</span></li>
+    <li>Брайан Грин. <b>Скрытая реальность. Параллельные миры и глубинные законы космоса.</b><span>Обзор разных мультивселенных, включая тегмарковскую.</span></li>
+    <li><a href="https://conwaylife.com/wiki/">LifeWiki</a> <span>Энциклопедия игры «Жизнь»: тысячи фигур, ружья, компьютеры внутри «Жизни».</span></li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="end">
+  <p class="cta">Хотите найти ответы сами — <em>поступайте на физику.</em></p>
+  <p class="authors">Авторы стенда: <b>Шепетков Владимир, Караулов Максим</b><br>РУДН · 2026</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ── неразрывные пробелы после коротких слов ──
+  const SHORT = /(?<=^|[\s«(])([вкосуияаВКОСУИЯА]|на|не|но|по|за|из|от|до|ли|же|об|во|со|то|На|Не|Но|По|За|Из|От|До|Об|Во|Со|То|Он|он|мы|Мы)\s+/g;
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => n.parentElement.closest("script,style,svg,canvas") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+  });
+  for (let n; (n = walker.nextNode());) {
+    n.nodeValue = n.nodeValue.replace(SHORT, "$1 ").replace(/ —/g, " —");
+  }
+
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const redraws = [];
+  const redrawAll = () => redraws.forEach(f => f());
+
+  // ── тема ──
+  const themeBtn = document.getElementById("themeBtn");
+  const sysDark = matchMedia("(prefers-color-scheme: dark)");
+  function currentTheme() {
+    const t = document.documentElement.dataset.theme;
+    return t || (sysDark.matches ? "dark" : "light");
+  }
+  function applyTheme(t) {
+    if (t) document.documentElement.dataset.theme = t;
+    themeBtn.textContent = currentTheme() === "dark" ? "Светлая тема" : "Тёмная тема";
+    redrawAll();
+  }
+  try { const saved = localStorage.getItem("muh-theme"); if (saved) document.documentElement.dataset.theme = saved; } catch (e) {}
+  themeBtn.addEventListener("click", () => {
+    const t = currentTheme() === "dark" ? "light" : "dark";
+    try { localStorage.setItem("muh-theme", t); } catch (e) {}
+    applyTheme(t);
+  });
+  sysDark.addEventListener("change", () => applyTheme());
+
+  // ── доска коня ──
+  (function () {
+    const g = document.getElementById("kb");
+    const s = 20, ns = "http://www.w3.org/2000/svg";
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) {
+      const q = document.createElementNS(ns, "rect");
+      q.setAttribute("x", c * s); q.setAttribute("y", r * s);
+      q.setAttribute("width", s); q.setAttribute("height", s);
+      q.setAttribute("class", (r + c) % 2 ? "board-sq-b" : "board-sq-a");
+      g.appendChild(q);
+    }
+    for (const [dr, dc] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]]) {
+      const d = document.createElementNS(ns, "circle");
+      d.setAttribute("cx", (2 + dc) * s + s / 2); d.setAttribute("cy", (2 + dr) * s + s / 2);
+      d.setAttribute("r", 4.5); d.setAttribute("class", "dot");
+      g.appendChild(d);
+    }
+  })();
+
+  // ── «Жизнь»: общие функции ──
+  function parseRLE(s) {
+    const rows = [[]]; let num = "";
+    for (const ch of s) {
+      if (ch >= "0" && ch <= "9") { num += ch; continue; }
+      const n = num ? +num : 1; num = "";
+      if (ch === "b" || ch === "o") for (let i = 0; i < n; i++) rows[rows.length - 1].push(ch === "o" ? 1 : 0);
+      else if (ch === "$") for (let i = 0; i < n; i++) rows.push([]);
+      else if (ch === "!") break;
+    }
+    return rows;
+  }
+  const GUN = parseRLE("24bo$22bobo$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o$2o8bo3bob2o4bobo$10bo5bo7bo$11bo3bo$12b2o!");
+  const GLIDER_NE = [[1,1,1],[0,0,1],[0,1,0]];
+  const BLOCK = [[1,1],[1,1]];
+
+  function World(w, h) { this.w = w; this.h = h; this.a = new Uint8Array(w * h); }
+  World.prototype.place = function (pat, r0, c0) {
+    pat.forEach((row, r) => row.forEach((v, c) => { if (v) this.a[(r0 + r) * this.w + c0 + c] = 1; }));
+  };
+  World.prototype.step = function () {
+    const { w, h, a } = this, b = new Uint8Array(w * h);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      let n = 0;
+      for (let dy = -1; dy <= 1; dy++) {
+        const yy = y + dy; if (yy < 0 || yy >= h) continue;
+        for (let dx = -1; dx <= 1; dx++) {
+          const xx = x + dx; if ((dx || dy) && xx >= 0 && xx < w) n += a[yy * w + xx];
+        }
+      }
+      const i = y * w + x;
+      b[i] = n === 3 || (n === 2 && a[i]) ? 1 : 0;
+    }
+    this.a = b;
+  };
+  World.prototype.copy = function () { const c = new World(this.w, this.h); c.a = this.a.slice(); return c; };
+
+  // ── живое поле ──
+  (function () {
+    const COLS = 48, ROWS = 30, M = 14;          // видимое поле и невидимый запас вокруг
+    const canvas = document.getElementById("lifeCanvas");
+    const ctx = canvas.getContext("2d");
+    const playBtn = document.getElementById("lifePlay");
+    const stat = document.getElementById("lifeStat");
+    let world, gen = 0, timer = null, cell = 10;
+
+    function reset(fill) {
+      world = new World(COLS + 2 * M, ROWS + 2 * M);
+      gen = 0;
+      if (fill === "gun") world.place(GUN, M + 1, M + 1);
+      if (fill === "rand") {
+        for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++)
+          world.a[(y + M) * world.w + x + M] = Math.random() < 0.3 ? 1 : 0;
+      }
+      draw();
+    }
+    function tick() {
+      world.step();
+      // клетки у самого края запаса стираем: улетевшие планеры исчезают, а не копятся
+      const { w, h, a } = world;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++)
+        if (x < 3 || y < 3 || x >= w - 3 || y >= h - 3) a[y * w + x] = 0;
+      gen++;
+      draw();
+    }
+    function size() {
+      const W = canvas.clientWidth;
+      cell = W / COLS;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(cell * ROWS * dpr);
+      canvas.style.height = cell * ROWS + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+    function draw() {
+      if (!world) return;
+      const W = cell * COLS, H = cell * ROWS;
+      ctx.fillStyle = css("--board"); ctx.fillRect(0, 0, W, H);
+      if (cell >= 7) {
+        ctx.strokeStyle = css("--gridline"); ctx.lineWidth = 1; ctx.beginPath();
+        for (let x = 1; x < COLS; x++) { ctx.moveTo(Math.round(x * cell) + .5, 0); ctx.lineTo(Math.round(x * cell) + .5, H); }
+        for (let y = 1; y < ROWS; y++) { ctx.moveTo(0, Math.round(y * cell) + .5); ctx.lineTo(W, Math.round(y * cell) + .5); }
+        ctx.stroke();
+      }
+      ctx.fillStyle = css("--accent");
+      let pop = 0;
+      const pad = Math.max(0.6, cell * 0.1);
+      for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+        if (world.a[(y + M) * world.w + x + M]) {
+          pop++;
+          ctx.fillRect(x * cell + pad, y * cell + pad, cell - 2 * pad, cell - 2 * pad);
+        }
+      }
+      stat.textContent = "ход " + gen + " · клеток " + pop;
+    }
+    function setPlaying(on) {
+      if (on && !timer) timer = setInterval(tick, 80);
+      if (!on && timer) { clearInterval(timer); timer = null; }
+      playBtn.textContent = timer ? "❚❚ Пауза" : "▶ Пуск";
+    }
+    playBtn.addEventListener("click", () => setPlaying(!timer));
+    document.getElementById("lifeStep").addEventListener("click", () => { setPlaying(false); tick(); });
+    document.getElementById("lifeGun").addEventListener("click", () => reset("gun"));
+    document.getElementById("lifeRand").addEventListener("click", () => reset("rand"));
+    document.getElementById("lifeClear").addEventListener("click", () => { setPlaying(false); reset(); });
+
+    // рисование пальцем или мышью
+    let paint = null;
+    function cellAt(e) {
+      const r = canvas.getBoundingClientRect();
+      const x = Math.floor((e.clientX - r.left) / cell), y = Math.floor((e.clientY - r.top) / cell);
+      return x >= 0 && y >= 0 && x < COLS && y < ROWS ? (y + M) * world.w + x + M : -1;
+    }
+    canvas.addEventListener("pointerdown", e => {
+      const i = cellAt(e); if (i < 0) return;
+      paint = world.a[i] ? 0 : 1; world.a[i] = paint; draw();
+      canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener("pointermove", e => {
+      if (paint === null) return;
+      const i = cellAt(e); if (i >= 0 && world.a[i] !== paint) { world.a[i] = paint; draw(); }
+    });
+    const stop = () => { paint = null; };
+    canvas.addEventListener("pointerup", stop);
+    canvas.addEventListener("pointercancel", stop);
+
+    // поле не крутится, пока его не видно
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting) setPlaying(false); })).observe(canvas);
+    }
+    reset("gun");
+    size();
+    window.addEventListener("resize", size);
+    redraws.push(draw);
+    window.__life = { tick, get world() { return world; }, M, COLS, ROWS };   // для проверки
+  })();
+
+  // ── лягушка и птица ──
+  (function () {
+    const n = 12, T = 16;
+    let w = new World(n, n);
+    w.place(GLIDER_NE, 8, 1);
+    w.place(BLOCK, 1, 9);
+    const hist = [w.copy()];
+    for (let t = 1; t < T; t++) { w.step(); hist.push(w.copy()); }
+    const isBlock = i => { const r = Math.floor(i / n), c = i % n; return r >= 1 && r <= 2 && c >= 9 && c <= 10; };
+
+    const frog = document.getElementById("frogCanvas"), fctx = frog.getContext("2d");
+    const bird = document.getElementById("birdCanvas"), bctx = bird.getContext("2d");
+    const slider = document.getElementById("frame"), label = document.getElementById("frameN");
+
+    function rgba(hex, a) {
+      const v = parseInt(hex.slice(1), 16);
+      return `rgba(${v >> 16 & 255},${v >> 8 & 255},${v & 255},${a})`;
+    }
+
+    function drawFrog(hi) {
+      const S = frog.width, c = S / n;
+      fctx.clearRect(0, 0, S, S);
+      fctx.fillStyle = css("--board"); fctx.fillRect(0, 0, S, S);
+      fctx.strokeStyle = css("--gridline"); fctx.lineWidth = 2; fctx.beginPath();
+      for (let i = 1; i < n; i++) { fctx.moveTo(i * c, 0); fctx.lineTo(i * c, S); fctx.moveTo(0, i * c); fctx.lineTo(S, i * c); }
+      fctx.stroke();
+      const acc = css("--accent"), c2 = css("--cell2");
+      if (hi >= 4) {                                   // где планер был четыре хода назад
+        fctx.fillStyle = css("--ghost");
+        hist[hi - 4].a.forEach((v, i) => { if (v && !isBlock(i) && !hist[hi].a[i]) fctx.fillRect((i % n) * c + 3, Math.floor(i / n) * c + 3, c - 6, c - 6); });
+      }
+      hist[hi].a.forEach((v, i) => {
+        if (!v) return;
+        fctx.fillStyle = isBlock(i) ? c2 : acc;
+        fctx.fillRect((i % n) * c + 3, Math.floor(i / n) * c + 3, c - 6, c - 6);
+      });
+      fctx.strokeStyle = acc; fctx.lineWidth = 4; fctx.strokeRect(2, 2, S - 4, S - 4);
+    }
+
+    function drawBird(hi) {
+      const W = bird.width, H = bird.height;
+      bctx.clearRect(0, 0, W, H);
+      const c30 = Math.cos(Math.PI / 6), u = 17, k = 15, hc = 4.5;
+      const ox = W / 2, oy = H - n * u - 14 - 0;
+      const P = (x, y, z) => [ox + (x - y) * c30 * u, oy + (x + y) * 0.5 * u - z];
+      const poly = (pts, fill, stroke, lw) => {
+        bctx.beginPath(); pts.forEach(([x, y], i) => i ? bctx.lineTo(x, y) : bctx.moveTo(x, y)); bctx.closePath();
+        if (fill) { bctx.fillStyle = fill; bctx.fill(); }
+        if (stroke) { bctx.strokeStyle = stroke; bctx.lineWidth = lw || 1; bctx.stroke(); }
+      };
+      const acc = css("--accent"), c2 = css("--cell2"), shade = currentTheme() === "dark" ? "rgba(0,0,0," : "rgba(10,16,40,";
+      for (let t = 0; t < T; t++) {
+        const z = t * k;
+        const corners = [P(0, 0, z), P(n, 0, z), P(n, n, z), P(0, n, z)];
+        if (t === hi) poly(corners, rgba(acc, .16), acc, 2.5);
+        else poly(corners, rgba(c2, .05), rgba(c2, .3), 1.2);
+        const cells = [];
+        hist[t].a.forEach((v, i) => { if (v) cells.push(i); });
+        cells.sort((p, q) => (Math.floor(p / n) + p % n) - (Math.floor(q / n) + q % n));
+        for (const i of cells) {
+          const r = Math.floor(i / n), c = i % n, col = isBlock(i) ? c2 : acc;
+          const x0 = c + .1, y0 = r + .1, x1 = c + .9, y1 = r + .9;
+          const right = [P(x1, y0, z), P(x1, y1, z), P(x1, y1, z + hc), P(x1, y0, z + hc)];
+          const left = [P(x0, y1, z), P(x1, y1, z), P(x1, y1, z + hc), P(x0, y1, z + hc)];
+          const top = [P(x0, y0, z + hc), P(x1, y0, z + hc), P(x1, y1, z + hc), P(x0, y1, z + hc)];
+          poly(right, col); poly(right, shade + ".3)");
+          poly(left, col); poly(left, shade + ".5)");
+          poly(top, col);
+        }
+      }
+      // ось времени
+      const [bx, by] = P(0, n, 0), topY = by - (T - 1) * k;
+      bctx.strokeStyle = css("--muted"); bctx.fillStyle = css("--muted"); bctx.lineWidth = 2;
+      bctx.beginPath(); bctx.moveTo(bx - 14, by); bctx.lineTo(bx - 14, topY); bctx.stroke();
+      bctx.beginPath(); bctx.moveTo(bx - 20, topY + 2); bctx.lineTo(bx - 14, topY - 9); bctx.lineTo(bx - 8, topY + 2); bctx.fill();
+      bctx.font = "500 20px " + css("--serif");
+      bctx.save(); bctx.translate(bx - 26, (by + topY) / 2); bctx.rotate(-Math.PI / 2);
+      bctx.textAlign = "center"; bctx.fillText("время", 0, 0); bctx.restore();
+    }
+
+    function draw() {
+      const hi = +slider.value;
+      label.textContent = hi;
+      drawFrog(hi); drawBird(hi);
+    }
+    slider.addEventListener("input", draw);
+    redraws.push(draw);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    draw();
+  })();
+
+  // ── опрос ──
+  (function () {
+    const buttons = document.querySelectorAll("[data-vote]");
+    const args = document.getElementById("args");
+    buttons.forEach(b => b.addEventListener("click", () => {
+      const v = b.dataset.vote;
+      buttons.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      args.hidden = false;
+      document.getElementById("tegmarkSays").hidden = false;
+      args.querySelectorAll(".arg").forEach(a => {
+        const mine = a.dataset.side === v;
+        a.classList.toggle("mine", mine);
+        a.querySelector("[data-tag]").textContent = mine ? "ваш выбор" : "вам возразят";
+        a.style.order = mine ? 0 : 1;
+      });
+    }));
+  })();
+
+  applyTheme();
+})();
+</script>
+</body>
+</html>
